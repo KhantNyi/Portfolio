@@ -3,7 +3,7 @@ title: Never trust a single frame
 description: How SafeRide turns noisy, one-frame guesses into evidence a person can stand behind.
 date: 2026-11-14
 tags: [Computer vision, SafeRide]
-draft: true
+draft: false
 ---
 
 SafeRide watches road video and flags motorcycle riders without a helmet, then captures the license plate as evidence. The detection models are the easy part to talk about. The harder part is everything around them, because a model looking at one frame is wrong far more often than you would like.

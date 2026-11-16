@@ -3,7 +3,7 @@ title: Row-level security is the whole wall
 description: What changes when a web app has no API layer and the browser talks to the database directly.
 date: 2026-11-16
 tags: [Supabase, Security]
-draft: true
+draft: false
 ---
 
 > Athonesayate ("expense" in Burmese) is created when there's a need for tracking my personal finance emerged.

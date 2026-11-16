@@ -3,7 +3,7 @@ title: A forecast you can check with a calculator
 description: Why Athone Sayate predicts your month with a few lines of arithmetic instead of machine learning.
 date: 2026-11-12
 tags: [Athone Sayate, Product]
-draft: true
+draft: false
 ---
 
 Athone Sayate shows where your month is likely to land before it gets there. It would have been easy to reach for something clever. I chose a model you can check by hand, because a money forecast you cannot explain is a forecast nobody should trust.

@@ -100,7 +100,7 @@ export const site = {
 
   // The large statement in the About section. Two or three sentences reads best.
   about:
-    'I am a full-stack engineer who likes hard problems and simple answers. I care about systems that stay fast as they grow, interfaces that feel obvious, and code the next person can read. These are a few things I have built on my own time.',
+    'I am a full-stack engineer who likes building things and seeing them come to life. I care about systems that stay fast as they grow, interfaces that feel intuitive, and architecture that scales. These are a few things I have built on my own time.',
 
   facts: [
     { label: 'Currently', value: 'Building side projects and open to new work' },

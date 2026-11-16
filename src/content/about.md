@@ -2,7 +2,7 @@ I build software in Bangkok. Most of what you see on this site started as someth
 
 ## How I got here
 
-I'm naturally curious about how things work, especially when it comes to technology and software. I enjoy turning ideas into working products, exploring unfamiliar tools, and figuring out how different pieces fit together. I find satisfaction in experimenting, making mistakes, and refining my work until everything falls into place. For me, building software is as much about learning and discovery as it is about the finished product. Naturally, this has led me to the path of Software Engineering and I'm currently pursuing a Bachelor's degree in Computer Science as Assumption University, Thailand.
+I'm naturally curious about how things work, especially when it comes to technology and software. I enjoy turning ideas into working products, exploring unfamiliar tools, and figuring out how different pieces fit together. I find satisfaction in experimenting, making mistakes, and refining my work until everything falls into place. For me, building software is as much about learning and discovery as it is about the finished product. This has led me to the path of Software Engineering and I'm currently pursuing a Bachelor's degree in Computer Science in Assumption University, Thailand.
 
 ## What I care about
 

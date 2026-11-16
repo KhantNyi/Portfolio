@@ -3,7 +3,7 @@ title: Never trust the price the browser sends
 description: Building a wallet for Dotesy that stays correct through retries, stale odds and impatient users.
 date: 2026-11-10
 tags: [Dotesy, Backend]
-draft: true
+draft: false
 ---
 
 Dotesy runs on play money, but I wanted the wallet to behave as if it were real. If balances can drift, double-charge or be edited from the browser, the leaderboard means nothing and the whole thing stops being fun.

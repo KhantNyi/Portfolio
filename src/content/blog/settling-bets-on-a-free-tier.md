@@ -3,7 +3,7 @@ title: Settling bets on a free tier
 description: How Dotesy settles every bet on time without a server that is always running.
 date: 2026-11-08
 tags: [Dotesy, Infrastructure]
-draft: true
+draft: false
 ---
 
 When a match ends, every bet on it should settle and every user should hear about it. The obvious answer is a background worker that runs all the time. Dotesy is hosted on Vercel's free Hobby plan, which has no always-on worker and only allows a cron job to run once a day.
