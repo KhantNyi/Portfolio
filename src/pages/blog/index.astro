@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Footer from '../../components/Footer.astro';
+import { site } from '../../data/site';
+
+const fullName = `${site.name.first} ${site.name.last}`;
+// Drafts are visible while developing and left out of the published site.
+const posts = (await getCollection('blog', ({ data }) => (import.meta.env.PROD ? !data.draft : true))).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const fmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+---
+
+<Base title={`Blog — ${fullName}`} description="Notes on what I am building and what it taught me.">
+  <header class="page-hero">
+    <p class="mono" data-hero-fade>Blog</p>
+    <h1 class="page-title" data-lines data-intro aria-label="Notes and learnings.">
+      <span class="line" aria-hidden="true"><span class="line-inner">Notes <em>and</em></span></span>
+      <span class="line" aria-hidden="true"><span class="line-inner">learnings.</span></span>
+    </h1>
+  </header>
+
+  <section class="page-section">
+    {
+      posts.length === 0 ? (
+        <p class="post-empty" data-reveal>
+          Nothing published yet. The first post is on its way.
+        </p>
+      ) : (
+        <ul class="post-list">
+          {posts.map((post) => (
+            <li data-reveal>
+              <a href={`/blog/${post.id}`}>
+                <span class="mono">
+                  {fmt.format(post.data.date)}
+                  {post.data.draft && <span class="draft-badge">Draft</span>}
+                </span>
+                <span class="post-title">
+                  {post.data.title} <em aria-hidden="true">→</em>
+                </span>
+                <span class="post-desc">{post.data.description}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+
+  <div class="page-footer">
+    <Footer />
+  </div>
+</Base>

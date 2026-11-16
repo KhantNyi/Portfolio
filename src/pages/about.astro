@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import Footer from '../components/Footer.astro';
+import { Content } from '../content/about.md';
+import { site } from '../data/site';
+
+const fullName = `${site.name.first} ${site.name.last}`;
+---
+
+<Base title={`About — ${fullName}`} description={`The story behind ${fullName}, ${site.role.toLowerCase()}.`}>
+  <header class="page-hero">
+    <p class="mono" data-hero-fade>About</p>
+    <h1 class="page-title" data-lines data-intro aria-label="The person behind the projects.">
+      <span class="line" aria-hidden="true"><span class="line-inner">The person behind</span></span>
+      <span class="line" aria-hidden="true"><span class="line-inner"><em>the projects.</em></span></span>
+    </h1>
+  </header>
+
+  <div class="about-page">
+    <figure class="about-portrait">
+      <div class="cover" data-cover="image">
+        <div class="cover-inner">
+          <img class="cover-img" src={site.portrait} alt={`Portrait of ${fullName}`} />
+        </div>
+      </div>
+      <figcaption class="mono" data-reveal>{fullName} — {site.location}</figcaption>
+    </figure>
+
+    <div class="prose prose-lead" data-reveal>
+      <Content />
+    </div>
+  </div>
+
+  <section class="page-section">
+    <dl class="facts">
+      {
+        site.facts.map((f) => (
+          <div data-reveal>
+            <dt class="mono">{f.label}</dt>
+            <dd>{f.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <a class="big-link" href="/blog">
+    <span class="mono" data-reveal>Keep reading</span>
+    <span class="big-link-title" data-lines>
+      <span class="line"><span class="line-inner">Notes and learnings <em>→</em></span></span>
+    </span>
+  </a>
+
+  <div class="page-footer">
+    <Footer />
+  </div>
+</Base>

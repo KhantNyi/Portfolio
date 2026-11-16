@@ -1,0 +1,53 @@
+---
+// Generative cover art used when a project has no screenshot.
+interface Props {
+  index: number;
+}
+const { index } = Astro.props;
+const variant = index % 4;
+const W = 800;
+const H = 750;
+
+const rings = Array.from({ length: 12 }, (_, i) => 40 + i * 42);
+
+const dots: { x: number; y: number }[] = [];
+for (let r = 0; r < 13; r++) for (let c = 0; c < 14; c++) dots.push({ x: 75 + c * 50, y: 75 + r * 50 });
+
+const waves = Array.from({ length: 16 }, (_, i) => {
+  const y = 120 + i * 34;
+  const amp = 10 + i * 3.5;
+  let d = `M -20 ${y}`;
+  for (let x = 0; x <= W + 40; x += 20) {
+    d += ` L ${x} ${(y + Math.sin(x / 90 + i * 0.45) * amp).toFixed(1)}`;
+  }
+  return d;
+});
+
+const squares = Array.from({ length: 11 }, (_, i) => ({ size: 60 + i * 52, rot: i * 7 }));
+---
+
+<svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <rect width={W} height={H} fill="#141412"></rect>
+  <g fill="none" stroke="#ebe7df" stroke-opacity="0.22" stroke-width="1.25">
+    {variant === 0 && rings.map((r) => <circle cx={W * 0.62} cy={H * 0.55} r={r} />)}
+    {variant === 2 && waves.map((d) => <path d={d} />)}
+    {
+      variant === 3 &&
+        squares.map((s) => (
+          <rect
+            x={W / 2 - s.size / 2}
+            y={H / 2 - s.size / 2}
+            width={s.size}
+            height={s.size}
+            transform={`rotate(${s.rot} ${W / 2} ${H / 2})`}
+          />
+        ))
+    }
+  </g>
+  {variant === 1 && dots.map((d) => <circle cx={d.x} cy={d.y} r="2.5" fill="#ebe7df" fill-opacity="0.3" />)}
+
+  {variant === 0 && <circle cx={W * 0.62} cy={H * 0.55} r="16" fill="#ff5a1f" />}
+  {variant === 1 && <circle cx="475" cy="325" r="16" fill="#ff5a1f" />}
+  {variant === 2 && <circle cx="250" cy="330" r="16" fill="#ff5a1f" />}
+  {variant === 3 && <circle cx={W / 2} cy={H / 2} r="16" fill="#ff5a1f" />}
+</svg>

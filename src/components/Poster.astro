@@ -1,0 +1,60 @@
+---
+// A project cover. Every cover shares one frame so the three projects read as
+// a set: either an illustration, or a dark poster with a single glowing mark.
+import type { Project } from '../data/site';
+import Cover from './Cover.astro';
+import Subu from './Subu.astro';
+import DotesyLogo from './DotesyLogo.astro';
+
+interface Props {
+  project: Project;
+  index: number;
+  eager?: boolean;
+}
+const { project, index, eager = false } = Astro.props;
+const { cover } = project;
+---
+
+<div class="cover" data-cover={cover?.type ?? 'generated'}>
+  <div class="cover-inner">
+    {
+      cover?.type === 'image' && (
+        <img
+          class:list={['cover-img', { 'is-pixelated': cover.pixelated }]}
+          src={cover.src}
+          alt=""
+          loading={eager ? 'eager' : 'lazy'}
+        />
+      )
+    }
+    {
+      cover?.type === 'subu' && (
+        <div class="poster poster-subu">
+          <div class="poster-glow" />
+          <svg class="poster-rings" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <g fill="none" stroke="currentColor">
+              {[70, 130, 190, 250, 310, 370, 430].map((r) => (
+                <circle cx="400" cy="235" r={r} />
+              ))}
+            </g>
+          </svg>
+          <div class="poster-art">
+            <Subu />
+          </div>
+        </div>
+      )
+    }
+    {
+      cover?.type === 'dotesy' && (
+        <div class="poster poster-dotesy">
+          <div class="poster-glow" />
+          <div class="poster-dots" />
+          <div class="poster-art">
+            <DotesyLogo />
+          </div>
+        </div>
+      )
+    }
+    {!cover && <Cover index={index} />}
+  </div>
+</div>

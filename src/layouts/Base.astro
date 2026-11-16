@@ -1,0 +1,55 @@
+---
+import '@fontsource/instrument-serif/400.css';
+import '@fontsource/instrument-serif/400-italic.css';
+import '@fontsource-variable/geist';
+import '@fontsource-variable/geist-mono';
+import 'lenis/dist/lenis.css';
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+const initials = `${site.name.first[0]}${site.name.last[0]}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0b0b0a" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('js');
+      }
+    </script>
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="progress" aria-hidden="true"></div>
+
+    <header class="nav">
+      <a class="nav-mark" href="/" aria-label="Home">{initials}</a>
+      <nav aria-label="Main">
+        <a href="/#work">Work</a>
+        <a href="/about">About</a>
+        <a href="/blog">Blog</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <slot />
+    </main>
+
+    <script>
+      import '../scripts/motion.ts';
+    </script>
+  </body>
+</html>

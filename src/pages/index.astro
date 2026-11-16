@@ -1,0 +1,255 @@
+---
+import Base from '../layouts/Base.astro';
+import Poster from '../components/Poster.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+import Graphic from '../components/Graphic.astro';
+import Illustration from '../components/Illustration.astro';
+import { site } from '../data/site';
+
+const fullName = `${site.name.first} ${site.name.last}`;
+const aboutWords = site.about.split(' ');
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<Base title={`${fullName} — ${site.role}`} description={site.tagline}>
+  <section class="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-main">
+      <h1 class="hero-title" data-lines data-intro aria-label={fullName}>
+        <span class="line" aria-hidden="true"><span class="line-inner">{site.name.first}</span></span>
+        <span class="line" aria-hidden="true"><span class="line-inner"><em>{site.name.last}</em></span></span>
+      </h1>
+      <figure class="hero-portrait">
+        <div class="cover" data-cover="image">
+          <div class="cover-inner">
+            <img class="cover-img" src={site.portrait} alt={`Portrait of ${fullName}`} />
+          </div>
+        </div>
+      </figure>
+    </div>
+    <div class="hero-meta">
+      <p class="mono" data-hero-fade>{site.role}<br />{site.location}</p>
+      <p class="hero-tagline" data-hero-fade>{site.tagline}</p>
+      <a class="mono hero-scroll" href="#about" data-hero-fade>Scroll <span aria-hidden="true">↓</span></a>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <p class="label mono" data-reveal>(01) About</p>
+    <p class="statement">
+      {
+        aboutWords.map((w) => (
+          <>
+            <span class="w">{w}</span>{' '}
+          </>
+        ))
+      }
+    </p>
+    <dl class="facts">
+      {
+        site.facts.map((f) => (
+          <div data-reveal>
+            <dt class="mono">{f.label}</dt>
+            <dd>{f.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+    <a class="more-link" href="/about" data-reveal>More about me <span aria-hidden="true">→</span></a>
+  </section>
+
+  <section class="showcase" id="glance" aria-roledescription="carousel" aria-label="Projects at a glance">
+    <div class="showcase-head">
+      <p class="mono" data-reveal>Projects at a glance</p>
+      <div class="showcase-arrows">
+        <button type="button" data-prev aria-label="Previous project">←</button>
+        <button type="button" data-next aria-label="Next project">→</button>
+      </div>
+    </div>
+
+    <div class="showcase-stage">
+      {
+        site.projects.map((p, i) => (
+          <article class="slide" aria-roledescription="slide" aria-label={p.title} style={`--pa:${p.accent}`}>
+            <div class="slide-cover">
+              <Poster project={p} index={i} eager />
+            </div>
+            <div class="slide-text">
+              <p class="mono">
+                {pad(i + 1)} — {p.kind}
+              </p>
+              <h2>{p.title}</h2>
+              <p class="slide-summary">{p.summary}</p>
+              <ul class="tags mono">
+                {p.tags.map((t) => (
+                  <li>{t}</li>
+                ))}
+              </ul>
+              <p class="project-links">
+                {p.links.map((l) => (
+                  <a href={l.href} target="_blank" rel="noopener noreferrer">
+                    {l.label} <span aria-hidden="true">↗</span>
+                  </a>
+                ))}
+                <a href={`#${p.slug}`}>
+                  Full story <span aria-hidden="true">↓</span>
+                </a>
+              </p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="showcase-tabs">
+      {
+        site.projects.map((p, i) => (
+          <button class="showcase-tab" type="button" aria-label={`Show ${p.title}`}>
+            <span class="tab-bar">
+              <span class="tab-fill" />
+            </span>
+            <span class="mono">{pad(i + 1)}</span>
+            <span class="tab-title">{p.title}</span>
+          </button>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="work" id="work">
+    <p class="label mono" data-reveal>(02) Work</p>
+    <h2 class="work-heading" aria-label="Selected work">
+      <span aria-hidden="true">Selected <em>work</em></span>
+      <sup class="mono" aria-hidden="true">{pad(site.projects.length)}</sup>
+    </h2>
+
+    <div class="projects">
+      {
+        site.projects.map((p, i) => (
+          <article class="project" id={p.slug} style={`--pa:${p.accent}`}>
+            <div class="project-info">
+              <p class="mono project-meta" data-reveal>
+                <span>
+                  {pad(i + 1)} / {pad(site.projects.length)}
+                </span>
+                <span>{p.year}</span>
+              </p>
+              <h3 data-reveal>{p.title}</h3>
+              <p class="project-desc" data-reveal>
+                {p.description}
+              </p>
+              <ul class="tags mono" data-reveal>
+                {p.tags.map((t) => (
+                  <li>{t}</li>
+                ))}
+              </ul>
+              <p class="project-links" data-reveal>
+                {p.links.map((l) => (
+                  <a href={l.href} target="_blank" rel="noopener noreferrer">
+                    {l.label} <span aria-hidden="true">↗</span>
+                  </a>
+                ))}
+              </p>
+            </div>
+
+            <div class="deck">
+              <section class="card card-cover" style="--i:0">
+                <div class="card-inner">
+                  <header class="card-head mono">
+                    <span>{p.kind}</span>
+                    <span>{p.role}</span>
+                  </header>
+                  <div class="card-body">
+                    <Poster project={p} index={i} />
+                  </div>
+                </div>
+              </section>
+
+              <section class="card card-problem" style="--i:1">
+                <div class="card-inner">
+                  <header class="card-head mono">
+                    <span>(01) Problem</span>
+                    <span>{p.title}</span>
+                  </header>
+                  <div class="card-body">
+                    <p class="card-statement">{p.story.problem}</p>
+                    <Illustration name={p.story.problemArt} />
+                  </div>
+                </div>
+              </section>
+
+              <section class="card card-solution" style="--i:2">
+                <div class="card-inner">
+                  <header class="card-head mono">
+                    <span>(02) Solution</span>
+                    <span>{p.title}</span>
+                  </header>
+                  <ol class="card-body steps">
+                    {p.story.solution.map((s, n) => (
+                      <li style={`--n:${n}`}>
+                        <span class="step-icon">
+                          <Icon name={s.icon} />
+                        </span>
+                        <span class="mono">Step {n + 1}</span>
+                        <h4>{s.title}</h4>
+                        <p>{s.text}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </section>
+
+              <section class="card card-challenges" style="--i:3">
+                <div class="card-inner">
+                  <header class="card-head mono">
+                    <span>(03) Challenges</span>
+                    <span>{p.title}</span>
+                  </header>
+                  <ol class="card-body">
+                    {p.story.challenges.map((c, n) => (
+                      <li style={`--n:${n}`}>
+                        <div class="g-tile">
+                          <Graphic name={c.art} />
+                        </div>
+                        <h4>{c.title}</h4>
+                        <p>{c.text}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </section>
+
+              <section class="card card-stack" style="--i:4">
+                <div class="card-inner">
+                  <header class="card-head mono">
+                    <span>(04) Stack</span>
+                    <span>{p.title}</span>
+                  </header>
+                  <dl class="card-body">
+                    {p.story.stack.map((s) => (
+                      <div>
+                        <dt class="mono">{s.group}</dt>
+                        <dd>{s.items}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              </section>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <p class="label mono" data-reveal>(03) Contact</p>
+    <h2 class="contact-title" data-lines aria-label="Let's build something.">
+      <span class="line" aria-hidden="true"><span class="line-inner">Let's build</span></span>
+      <span class="line" aria-hidden="true"><span class="line-inner"><em>something.</em></span></span>
+    </h2>
+    <a class="contact-email" href={`mailto:${site.email}`} data-reveal>{site.email}</a>
+    <Footer />
+  </section>
+</Base>

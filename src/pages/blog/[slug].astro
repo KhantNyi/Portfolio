@@ -1,0 +1,45 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Footer from '../../components/Footer.astro';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => (import.meta.env.PROD ? !data.draft : true));
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const fullName = `${site.name.first} ${site.name.last}`;
+const fmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base title={`${post.data.title} — ${fullName}`} description={post.data.description}>
+  <article>
+    <header class="page-hero post-hero">
+      <a class="mono back-link" href="/blog" data-hero-fade>← All posts</a>
+      <h1 class="post-heading" data-hero-fade>{post.data.title}</h1>
+      <p class="mono post-meta" data-hero-fade>
+        {fmt.format(post.data.date)}
+        {post.data.tags.map((t) => <span>{t}</span>)}
+        {post.data.draft && <span class="draft-badge">Draft</span>}
+      </p>
+    </header>
+
+    <div class="prose post-body" data-reveal>
+      <Content />
+    </div>
+  </article>
+
+  <a class="big-link" href="/blog">
+    <span class="mono" data-reveal>Back to</span>
+    <span class="big-link-title" data-lines>
+      <span class="line"><span class="line-inner">All posts <em>→</em></span></span>
+    </span>
+  </a>
+
+  <div class="page-footer">
+    <Footer />
+  </div>
+</Base>
